@@ -1,37 +1,41 @@
-import { select, pie, arc } from 'd3';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import Frontbar from './Frontbar';
 
 const CircularProgressBar = ({width, height, data}) => {
-    const [value, setValue] = useState(40);
 
     const tau = 2 * Math.PI;
     const min = Math.min(width, height);
-    const arcWidth = 8;
+    const arcWidth = 14;
     const outerRadius = min/2;
-    const innerRadius = min/2 - arcWidth;
-    const edgeRadius = 5;
+    const edgeRadius = 10;
 
-    const randomizeData = (e) => {
-        e.preventDefault();
-        setValue(Math.floor(Math.random() * 100 + 1));
+    const values = [];
+    for(const [key, value] of Object.entries(data)) {
+        if(key !== 'label')
+            values.push(value);
     }
+
+    const colors = ['#666DB5', '#B08DE2', '#ccaaff', '#d8bffc']
 
     return (
         <>
             <svg width={width} height={height}>
-                <Frontbar
-                    value={value}
-                    tau={tau}
-                    width={width}
-                    height={height}
-                    innerRadius={innerRadius}
-                    outerRadius={outerRadius}
-                    edgeRadius={edgeRadius}
-                />
+                {
+                    values.length>0 && values.map((value, index) => (
+                        <Frontbar
+                            value={value}
+                            tau={tau}
+                            width={width}
+                            height={height}
+                            color={colors[index]}
+                            arcWidth={arcWidth}
+                            outerRadius={outerRadius - index * 1.2 * arcWidth}
+                            edgeRadius={edgeRadius}
+                        />
+                    ))
+                }
             </svg>
-            <button onClick={randomizeData}>Randomize data</button>
         </>
     )
 }
