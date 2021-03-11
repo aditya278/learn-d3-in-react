@@ -16,6 +16,9 @@ import VBarChartPath from "./components/VBarChartPath";
 import GroupedStacked from "./components/GroupedStacked";
 import HGroupedStacked from "./components/HGroupedStacked";
 import CircularProgressBar from "./components/CircularProgressBar";
+import StarRating from './components/StarRating';
+import FinalBar from './components/FinalBar';
+import Mood from './components/StarRating/Mood';
 // import Donut from './components/Donut';
 
 const datas = [
@@ -181,7 +184,10 @@ function App() {
         keys={allKeys}
         colors={colors}
       /> */}
-      <CircularProgressBar width={200} height={200} data={CircularProgressBarData[2]} />
+      {/* <CircularProgressBar width={200} height={200} data={CircularProgressBarData[2]} /> */}
+      <StarRating width={400} height={150} rating={80} size={60} variant={'bars'} />
+      {/* <Mood width={100} height={100} rating={80} /> */}
+      {/* <FinalBar /> */}
       <br />
       {/* <button onClick={changeData}>Change Data</button> */}
       {/* <Donut data={data[0]} outerRadius={100} innerRadius={50} /> */}
