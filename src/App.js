@@ -20,6 +20,7 @@ import StarRating from './components/StarRating';
 import FinalBar from './components/FinalBar';
 import Mood from './components/StarRating/Mood';
 // import Donut from './components/Donut';
+import GeoGraph from './components/GeoGraph';
 
 const datas = [
   [10, 30],
@@ -185,12 +186,12 @@ function App() {
         colors={colors}
       /> */}
       {/* <CircularProgressBar width={200} height={200} data={CircularProgressBarData[2]} /> */}
-      <StarRating width={400} height={150} rating={80} size={60} variant={'bars'} />
+      {/* <StarRating width={400} height={150} rating={80} size={60} variant={'bars'} /> */}
       {/* <Mood width={100} height={100} rating={80} /> */}
       {/* <FinalBar /> */}
-      <br />
       {/* <button onClick={changeData}>Change Data</button> */}
       {/* <Donut data={data[0]} outerRadius={100} innerRadius={50} /> */}
+      <GeoGraph />
     </div>
   );
 }
