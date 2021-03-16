@@ -21,6 +21,8 @@ import FinalBar from './components/FinalBar';
 import Mood from './components/StarRating/Mood';
 // import Donut from './components/Donut';
 import GeoGraph from './components/GeoGraph';
+import Donut2 from './components/Donut2';
+import { useToolTip, toolTipContext } from "./useTooltip";
 
 const datas = [
   [10, 30],
@@ -162,6 +164,7 @@ export const CircularProgressBarData = [
 var i = 0;
 
 function App() {
+  const state = useToolTip();
   const [data, setData] = useState(datas[0]);
 
   useEffect(() => {
@@ -174,6 +177,7 @@ function App() {
   };
 
   return (
+    <toolTipContext.Provider value={state}>
     <div className="App">
       {/* <SmileyFace width={960} height={500} radius={250} /> */}
       {/* <Bar width={60} height={60} data={data} /> */}
@@ -185,14 +189,16 @@ function App() {
         keys={allKeys}
         colors={colors}
       /> */}
-      {/* <CircularProgressBar width={200} height={200} data={CircularProgressBarData[2]} /> */}
+      <CircularProgressBar width={200} height={200} data={CircularProgressBarData[2]} />
       {/* <StarRating width={400} height={150} rating={80} size={60} variant={'bars'} /> */}
       {/* <Mood width={100} height={100} rating={80} /> */}
       {/* <FinalBar /> */}
       {/* <button onClick={changeData}>Change Data</button> */}
       {/* <Donut data={data[0]} outerRadius={100} innerRadius={50} /> */}
-      <GeoGraph />
+      {/* <GeoGraph /> */}
+      {/* <Donut2 /> */}
     </div>
+    </toolTipContext.Provider>
   );
 }
 

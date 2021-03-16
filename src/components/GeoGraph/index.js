@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { json } from 'd3-fetch';
+import React, { useEffect, useState } from 'react';
 import GeoMap from './GeoMap.js'
-import stateJson from './us2.json';
+// import stateJson from './us2.json';
 
 const data = [
     {label : 'Texas', positions: 230, open: 170, hold: 30, closed: 20 },
@@ -20,6 +21,8 @@ const keys = ['positions', 'open', 'hold', 'closed'];
 const GeoGraph = () => {
     const [key, setKey] = useState(keys[0]);
     const [counter, setCounter] = useState(1);
+    const [stateJson, setStateJson] = useState();
+
     const changeKey = () => {
         console.log(counter);
         console.log(keys[counter]);
@@ -31,10 +34,21 @@ const GeoGraph = () => {
         setKey(keys[counter]);
     }
 
+    async function fetchData() {
+        const res = await json('https://gist.githubusercontent.com/aditya278/a4bac860f267e8cabdb4674fa7b452c3/raw/8ea0059cb6fd7a037da0207071b21f6d734305c4/us-states.json');
+        setStateJson(res);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div>
             <h1>Total {key}!</h1>
-            <GeoMap width={500} height={300} stateJson={stateJson} data={data} field={key} />
+            {
+                stateJson && <GeoMap width={500} height={300} stateJson={stateJson} data={data} field={key} />
+            }
             <button onClick={changeKey}>Change the Key</button>
       </div>
     );

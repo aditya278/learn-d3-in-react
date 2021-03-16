@@ -1,9 +1,10 @@
-import { arc, format, interpolate, interpolateNumber, select, transition } from 'd3';
-import React, { useEffect, useRef } from 'react'
+import { arc, format, interpolate, interpolateNumber, select, transition, pointer } from 'd3';
+import React, { useState, useEffect, useRef } from 'react'
 
 const formatNumber = format(",d");
 
-const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edgeRadius}) => {
+const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edgeRadius, setXCoord, setYCoord, setToolTip}) => {
+
     const pathRef = useRef();
     const textRef = useRef();
     const initialValue = 0;
@@ -32,6 +33,13 @@ const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edge
         g.transition(t)
             .duration(750)
             .attrTween('d', arcTween((value * tau) / 100, arcGenerator));
+
+        g.on('mouseover', (event, d) => {
+                setXCoord(pointer(event)[0]);
+                setYCoord(pointer(event)[1]);
+                setToolTip(true)
+            })
+            .on('mouseleave', d => setToolTip(false));
 
         const textValue = select(textRef.current);
         textValue
