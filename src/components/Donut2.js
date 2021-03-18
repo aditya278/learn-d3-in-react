@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { select, selectAll, scaleOrdinal, extent, pie, arc } from "d3";
-
-import { toolTipContext } from "../useTooltip";
 import ToolTip from "../ToolTip";
 
 const width = 150;
@@ -50,7 +48,6 @@ const data = [
   },
 ];
 export default function DoughnutChart() {
-  const { toolTip, setToolTip } = useContext(toolTipContext);
 
   const svgRef = useRef();
   const color = scaleOrdinal()
@@ -79,15 +76,15 @@ export default function DoughnutChart() {
     arch
       .append("path")
       .attr("d", path)
-      .on("mouseover", (d) => setToolTip(d))
-      .on("mouseleave", (d) => setToolTip(false))
+    //   .on("mouseover", (d) => setToolTip(d))
+    //   .on("mouseleave", (d) => setToolTip(false))
       .append("title")
       .text((d) => getToolTipData(d));
   }, []);
   return (
     <>
       <svg width={width} height={height} ref={svgRef}>
-        {toolTip && <ToolTip x={20} y={40} info={{ label: "hello" }} />}
+        {/* {toolTip && <ToolTip x={20} y={40} info={{ label: "hello" }} />} */}
       </svg>
     </>
   );

@@ -1,9 +1,26 @@
-import { arc, format, interpolate, interpolateNumber, select, transition, pointer } from 'd3';
+import { arc, format, interpolate, interpolateNumber, select, transition, pointer, gray } from 'd3';
 import React, { useState, useEffect, useRef } from 'react'
+
+import ToolTip from "../ToolTip";
 
 const formatNumber = format(",d");
 
-const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edgeRadius, setXCoord, setYCoord, setToolTip}) => {
+const ToolTipComp = () => {
+  return (
+    <>
+      <div style={{backgroundColor: 'gray'}}>
+        <h1>Hello</h1>
+        <h5>This is TT</h5>
+      </div>
+    </>
+  );
+};
+
+const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edgeRadius}) => {
+
+  const [showToolTip, setShowToolTip] = useState(false);
+  const [xCoord, setXCoord] = useState(0);
+  const [yCoord, setYCoord] = useState(0);
 
     const pathRef = useRef();
     const textRef = useRef();
@@ -35,11 +52,12 @@ const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edge
             .attrTween('d', arcTween((value * tau) / 100, arcGenerator));
 
         g.on('mouseover', (event, d) => {
+                g.raise();
                 setXCoord(pointer(event)[0]);
                 setYCoord(pointer(event)[1]);
-                setToolTip(true)
+                setShowToolTip(true)
             })
-            .on('mouseleave', d => setToolTip(false));
+            .on('mouseleave', d => setShowToolTip(false));
 
         const textValue = select(textRef.current);
         textValue
@@ -63,6 +81,9 @@ const Frontbar = ({width, height, color, value, tau, arcWidth, outerRadius, edge
         <g className="front-bar-group" transform={`translate(${(width/2)}, ${(height/2)})`} fill={color}>
             <path ref={pathRef} />
             <text transform={`translate(-34, -${outerRadius- arcWidth})`} ref={textRef} style={textStyle} />
+            {showToolTip && (
+            <ToolTip x={xCoord} y={yCoord} ToolTipComp={ToolTipComp} />
+            )}
         </g>
     )
 }

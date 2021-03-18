@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { scaleBand, scaleLinear, select, scaleOrdinal } from 'd3';
+import d3Tip from 'd3-tip';
 
 //const color = scaleOrdinal().range(['#A293CC','#CBCBCB'])
 
@@ -36,6 +37,10 @@ const Bar5 = ({width, height, data}) => {
         const color = scaleOrdinal().range(['#A293CC','#CBCBCB']);
         const id = scaleOrdinal().range(['bar1', 'bar2']);
 
+        const t = d3Tip()
+            .attr('class', 'toolTip')
+            .html(d => '<div>hello</div>');
+
         g.selectAll('bar')
             .data(data)
             .enter().append('path')
@@ -50,6 +55,8 @@ const Bar5 = ({width, height, data}) => {
                     h${svgWidth}
                     v${-(yScale.bandwidth())}Z
                 `)
+        g.on('mouseover', (data, index, element) => t.show(data, index))
+        .on('mouseleave', t.hide);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 

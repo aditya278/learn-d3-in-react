@@ -2,24 +2,7 @@ import React, { useState } from "react";
 
 import Frontbar from "./Frontbar";
 
-import ToolTip from '../ToolTip';
-
-const ToolTipComp = () => {
-    return (
-        <>
-            <div>
-                <h1>Hello</h1>
-                <h5>This is TT</h5>
-            </div>
-        </>
-    )
-}
-
 const CircularProgressBar = ({ width, height, data }) => {
-
-    const [toolTip, setToolTip ] = useState();
-    const [xCoord, setXCoord] = useState(0);
-    const [yCoord, setYCoord] = useState(0);
 
   const tau = 2 * Math.PI;
   const min = Math.min(width, height);
@@ -47,16 +30,8 @@ const CircularProgressBar = ({ width, height, data }) => {
             arcWidth={arcWidth}
             outerRadius={outerRadius - index * 1.2 * arcWidth}
             edgeRadius={edgeRadius}
-            setToolTip={setToolTip}
-            setXCoord={setXCoord}
-            setYCoord={setYCoord}
           />
         ))}
-        {
-            toolTip && (
-                <ToolTip x={xCoord} y={yCoord} ToolTipComp={ToolTipComp} />
-            )
-        }
     </svg>
   );
 };
